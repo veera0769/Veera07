@@ -1,43 +1,18 @@
-CREATE TABLE employees (emp_id NUMBER PRIMARY KEY, emp_name VARCHAR2(50), deptno NUMBER, sal NUMBER, comm NUMBER);
-
-Insert Employee Table:- INSERT INTO employees VALUES (1, 'Ramesh', 10, 50000, 5000); INSERT INTO employees VALUES (2, 'Suresh', 20, 60000, 6000); Create the salary_audit Table:- CREATE TABLE salary_audit (audit_id NUMBER PRIMARY KEY, emp_id NUMBER, old_salary NUMBER, new_salary NUMBER, change_date
-
-TIMESTAMP);
-
-Create Sequence for Audit Table:- CREATE SEQUENCE salary_audit_seq START WITH 1 INCREMENT BY 1;
-
-CREATE OR REPLACE TRIGGER trg_salary_audit
-
-1/2
-
-AFTER UPDATE OF sal ON employees FOR EACH ROW
-
-WHEN (NEW.sal <> OLD.sal)
-
-DECLARE v_audit_id NUMBER;
-
-BEGIN SELECT salary_audit_seq.NEXTVAL
-
-INTO v_audit_id FROM DUAL;
-
-INSERT INTO salary_audit (audit_id,
-
-emp_id, old_salary, new_salary,
-
-change_date) VALUES (v_audit_id,
-
-:OLD.emp_id, :OLD.sal, :NEW.sal,
-
-SYSTIMESTAMP);
-
-END;
-
-/
-
-Check The Trigger:-
-
-UPDATE employees SET sal = 70000
-
-WHERE emp_id = 1;
-
-SELECT * FROM salary_audit;
+CREATE TABLE student_rowtri ( previous_age NUMBER(5), current_age 
+NUMBER(5), agediff NUMBER(10) ); 
+TRIGGER Creation:
+BEFORE DELETE OR INSERT OR UPDATE ON student_rowtri 
+FOR EACH ROW 
+WHEN (NEW.CODE > 0) 
+DECLARE 
+age_diff number; 
+BEGIN 
+age_diff := :NEW.age - :OLD.age; 
+dbms_output.put_line ('Prevoius age: ' || : OLD.age); 
+dbms_output.put_line ('Current age: ' || : NEW.age); 
+dbms_output.put_line ('Age difference: ' || age_diff); 
+END; 
+DML Operations
+INSERT INTO student_rowtri VALUES (10, 30, 20); 
+UPDATE student_rowtri SET current_age = 35 WHERE previous_age = 10; 
+DELETE FROM student_rowtri WHERE previous_age = 10;
