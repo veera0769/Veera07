@@ -1,19 +1,11 @@
-def insert_record_sequentially(filename, new_record, position):
- with open(filename, 'a') as file:
- lines = file.readlines()
- lines.insert(position, new_record + '\n')
- file.seek(0)
- file.writelines(lines)
-def insert_record_randomly(filename, new_record, position, record_size):
- with open(filename, 'r+') as file:
- offset = position * record_size
- file.seek(offset)
- file.write(new_record + '\n')
- file.seek(0, 2)
- file.truncate()
-filename = "my_file.txt"
-new_record = "New record"
-position = 2
-record_size = 20
-insert_record_sequentially(filename, new_record, position)
-insert_record_randomly(filename, new_record, position, record_size)
+import pandas as pd
+data = [
+ {'Name': 'Alice', 'Age': 25, 'City': 'New York'},
+ {'Name': 'Bob', 'Age': 30, 'City': 'Los Angeles'},
+ {'Name': 'Charlie', 'Age': 35, 'City': 'Chicago'}
+]
+df = pd.DataFrame(data)
+df.to_csv('people.csv', index=False)
+df_from_csv = pd.read_csv('people.csv')
+print(df_from_csv.head())
+print(df_from_csv.info()
