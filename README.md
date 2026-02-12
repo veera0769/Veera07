@@ -1,17 +1,33 @@
-pip install virtualenv
-python –m venv venv
-pip install Flask
-flask –version
-from flask import Flask
-app = Flask(__name__)
-@app.route(‘/’)
-def home():
-return “Hello, Flask!”
-if __name__ == ‘__main__’:
-app.run(debug=True)
-# On Windows (CMD)
-set FLASK_APP=app.py
-# On Windows (Powershell)
-$env:FLASK_APP = “app.py”
-flask run
-export FLASK_ENV=development
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+</head>
+<body>
+
+<h2>Login</h2>
+
+<input type="text" id="loginUser" placeholder="Username"><br><br>
+<input type="password" id="loginPass" placeholder="Password"><br><br>
+<button onclick="login()">Login</button>
+
+<p id="msg"></p>
+
+<script>
+function login() {
+  let user = document.getElementById("loginUser").value;
+  let pass = document.getElementById("loginPass").value;
+
+  let savedUser = localStorage.getItem("username");
+  let savedPass = localStorage.getItem("password");
+
+  if (user === savedUser && pass === savedPass) {
+    document.getElementById("msg").innerHTML = "Login successful 🎉";
+  } else {
+    document.getElementById("msg").innerHTML = "Invalid username or password ❌";
+  }
+}
+</script>
+
+</body>
+</html>
